@@ -1,10 +1,13 @@
 package com.cognixia.jump.model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 @Table(name="USERS")
@@ -25,10 +28,27 @@ public class User implements Serializable {
 	@Column(name="PASSWORD")
 	String password;
 	
+	@Transient
+	List<Review> reviews;
+	
 	public User() {
 		super();
 	}
 	
+	
+	
+	public List<Review> getReviews() {
+		return reviews;
+	}
+
+
+
+	public void setReviews(List<Review> reviews) {
+		this.reviews = reviews;
+	}
+
+
+
 	public User(Integer userid,boolean admin,String username,String password) {
 		this.userId=userid;
 		this.admin=admin;
