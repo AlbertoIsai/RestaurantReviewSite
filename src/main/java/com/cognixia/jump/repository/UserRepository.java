@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer>{
 	
-	List<User> findAllusers();
+	List<User> findAll();
 	User findUsersByUsername(String username);
 	
 	//Boolean isAdmin();

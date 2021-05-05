@@ -12,9 +12,10 @@ import com.cognixia.jump.model.Restaurant;
 public interface RestaurantRepository extends JpaRepository<Restaurant,Integer> {
 	
 	
-	Restaurant findRestaurauntByName(String Rname);
-	List<Restaurant> findAllRestauraunts();
-	List<Restaurant> findRestaurauntsByLocation(String location);
+	Restaurant findRestaurauntByRestaurantName(String restaurantName);
+	List<Restaurant> findAll();
+	
+	List<Restaurant> findRestaurauntsByCity(String city);
 	
 	@Query("select restaurantName, description, city from Restaurant where restaurantId = ?1")
 	Restaurant findRestaurauntById(Integer rid);
