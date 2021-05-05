@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
-@Table(name="user_restaurant_link")
+@Table(name="review")
 @Entity
 public class Review {
 
