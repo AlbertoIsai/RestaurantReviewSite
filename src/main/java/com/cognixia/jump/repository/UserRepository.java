@@ -8,6 +8,7 @@ import com.cognixia.jump.model.User;
 import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer>{
+	
 	List<User> findAllusers();
 	User findUsersByUsername(String username);
 	
