@@ -18,4 +18,6 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 	@Query(value = "SELECT * FROM review WHERE restaurant_id = (select restaurant_id from user where restaurant_name = ?1", nativeQuery = true)
 	List<Review> findReviewsByRestaurantName(String restaurantName);
 	
+	
+	
 }
