@@ -17,4 +17,6 @@ public interface UserRepository extends JpaRepository<User,Integer>{
 
 	@Query(value = "SELECT admin FROM user WHERE userName = ?1", nativeQuery = true)
 	boolean isAdmin(String userName);
+	
+	User findUserByPassword(String password);
 }
