@@ -1,30 +1,26 @@
 package com.cognixia.jump.controller;
-​
-import java.util.ArrayList;
 import java.util.List;
-​
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-​
+
 import com.cognixia.jump.model.User;
 import com.cognixia.jump.repository.UserRepository;
-​
+
 @RequestMapping("/api")
 @RestController
 public class UserController 
 {
 	@Autowired
 	UserRepository userRepo;
-	
-	private static List<User> userDatabase = new ArrayList<>();
-	private static int counter = 1;
-	
-​
+		
 	@GetMapping("/user")
 	public List<User> getAllUsers()
 	{
@@ -40,66 +36,30 @@ public class UserController
 	}
 	
 	@GetMapping("/user/{id}")
-	public User findUserById(@PathVariable String id)
+	public Optional<User> findUserById(@PathVariable String id)
 	{
-		// find a user by their user ID
-		
-		for(int i = 0; i < userDatabase.size(); i++)
-		{
-			if(userDatabase.get(i).getUserId() == Integer.parseInt( id))
-			{
-				return userDatabase.get(i);
-			}
-		}
-		return new User();
+		 return userRepo.findById(Integer.parseInt(id));
 	}
-	
+	//take in user, return whether or not its an admin
 	@GetMapping("/user/admins")
 	public List<User> findUserAdmins()
 	{
-		// return all admin users
+		return userRepo.findUsersByAdmin(true);
 		
-	List<User> admins = null;
-		for(int i = 0; i < userDatabase.size(); i++)
-		{
-			if(userDatabase.get(i).getAdmin() == true)
-			{
-				admins.add(userDatabase.get(i));
-			}
-		}
-		return admins;
 	}
 	
-	@PostMapping("/user")
-	public User createNewUser(Integer userId, Boolean admin, String username, String password)
-	{
-		// create new user from scratch
-		
-		User newUser = new User(counter++, admin, username, password);
-		userDatabase.add(newUser);
-		return newUser;
+	@PostMapping(value="/user")
+	public void addReview(@RequestBody User user) {
+		userRepo.save(user);
 	}
 	
-	@PutMapping("user")
+	@PutMapping(value="/user")
 	public User updateUser(User user)
 	{
 		
 		//adds new info into a current user ID from json
+		return userRepo.save(user);
 		
-		String id = String.valueOf(user.getUserId());
-		User updateUser = findUserById(id);
-		
-		if(updateUser.getUserId() != -1)
-		{
-			updateUser.setAdmin(user.getAdmin());
-			updateUser.setUsername(user.getUsername());
-			updateUser.setPassword(user.getPassword());
-		}
-		return updateUser;
 		
 	}
-	
-	
-	
-​
 }
