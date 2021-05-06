@@ -21,15 +21,16 @@ public class UserController
 	@Autowired
 	UserRepository userRepo;
 		
-	@GetMapping("/user")
+	
+	//-------------------GET METHODS-------------------
+	@GetMapping(value="/user")
 	public List<User> getAllUsers()
 	{
-		// return all user
-				
+		// return all user		
 		return userRepo.findAll();
 	}
 	
-	@GetMapping("/user/name")
+	@GetMapping(value="/user/name")
 	public User findByUsername(String username)
 	{
 		return userRepo.findUsersByUsername(username);
@@ -40,26 +41,35 @@ public class UserController
 	{
 		 return userRepo.findById(Integer.parseInt(id));
 	}
+	
 	//take in user, return whether or not its an admin
+	@GetMapping(value="/user/admin/")
+	public boolean isAdmin(String userName) {
+		if(userRepo.isAdmin(userName)) {
+			return true;
+		}
+		return false;
+	}
+	
 	@GetMapping("/user/admins")
 	public List<User> findUserAdmins()
 	{
-		return userRepo.findUsersByAdmin(true);
-		
+		return userRepo.findUsersByAdmin(true);	
 	}
+	
+//----------------------POST METHODS----------------	
 	
 	@PostMapping(value="/user")
 	public void addReview(@RequestBody User user) {
 		userRepo.save(user);
 	}
+
 	
+//-----------------UPDATE METHODS-----------------
 	@PutMapping(value="/user")
 	public User updateUser(User user)
 	{
-		
 		//adds new info into a current user ID from json
-		return userRepo.save(user);
-		
-		
+		return userRepo.save(user);		
 	}
 }
