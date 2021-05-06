@@ -50,7 +50,7 @@ public class UserController
 		}
 		return null;
 	}
-	
+	//
 	
 	//take in user, return whether or not its an admin
 	@GetMapping(value="/user/admin/")
