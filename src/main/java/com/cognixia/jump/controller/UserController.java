@@ -44,11 +44,11 @@ public class UserController
 	
 	//take in user and check to make sure password matches. if it does, return User
 	@GetMapping(value="/user/validation")
-	public User userValidation(User user) {
+	public boolean isValid(User user) {
 		if (user.getUsername() == userRepo.findUserByPassword(user.getPassword()).getUsername()) {
-			return user;
+			return true;
 		}
-		return null;
+		return false;
 	}
 	//
 	
