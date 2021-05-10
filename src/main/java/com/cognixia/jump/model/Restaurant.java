@@ -40,6 +40,14 @@ public class Restaurant implements Serializable{
 	@Transient
 	Double stars;
 	
+	public Double getStars() {
+		return stars;
+	}
+
+	public void setStars(Double stars) {
+		this.stars = stars;
+	}
+
 	public List<Review> getReviews() {
 		return reviews;
 	}

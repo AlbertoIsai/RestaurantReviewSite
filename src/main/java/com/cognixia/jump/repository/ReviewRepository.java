@@ -25,7 +25,7 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 	@Query(value = "SELECT * FROM review WHERE restaurant_id = :restaurantId and user_id = :userId", nativeQuery = true)
 	Review findReviewByUserAndRestaurant(int restaurantId, int userId);
 
-	@Query(value = "SELECT AVG(stars) FROM review where restaurant_id = (Select restaurant_id from restaurant where restaurant_name = :restaurantName", nativeQuery = true)
+	@Query(value = "SELECT AVG(rating) FROM review where restaurant_id = (Select restaurant_id from restaurant where restaurant_name = :restaurantName)", nativeQuery = true)
 	Double findAverageStars(String restaurantName);
 	
 	

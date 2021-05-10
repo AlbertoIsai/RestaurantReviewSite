@@ -36,6 +36,7 @@ public class RestaurantController {
 		List<Restaurant> restaurants = repo.findAll();
 		for (Restaurant r : restaurants) {
 			r.setReviews(reviewRepo.findReviewsByRestaurantName(r.getRestaurantName()));
+			r.setStars(reviewRepo.findAverageStars(r.getRestaurantName()));
 		}
 		return restaurants;
 	}
@@ -45,6 +46,7 @@ public class RestaurantController {
 		Restaurant restaurant = repo.findById(id).get();
 		//restaurant.setReviews(reviewRepo.findReviewsByRestaurantName(restaurant.getRestaurantName()));
 		restaurant.setReviews(reviewRepo.findReviewsByRestaurantId(id));
+		restaurant.setStars(reviewRepo.findAverageStars(restaurant.getRestaurantName()));
 		return restaurant;
 	}
 	
