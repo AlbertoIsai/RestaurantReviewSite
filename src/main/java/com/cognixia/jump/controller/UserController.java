@@ -29,6 +29,11 @@ public class UserController
 		// return all user		
 		return userRepo.findAll();
 	}
+	@GetMapping(value="/user/{reviewId}")
+	public String findUserByReview(@PathVariable Integer reviewId) {
+		return userRepo.findUserNameByReview(reviewId);
+	}
+	
 	
 	@GetMapping(value="/user/name")
 	public User findByUsername(String username)
