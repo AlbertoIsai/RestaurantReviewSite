@@ -20,4 +20,9 @@ public interface UserRepository extends JpaRepository<User,Integer>{
 	boolean isAdmin(String userName);
 	
 	User findUserByPassword(String password);
+	
+	@Query(value = "SELECT user_name FROM user WHERE user_id = (select user_id from review where review_id = :reviewId)", nativeQuery = true)
+	String findUserNameByReview(Integer reviewId);
+
+	
 }
