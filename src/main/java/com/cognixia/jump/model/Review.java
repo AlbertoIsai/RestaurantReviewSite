@@ -32,14 +32,24 @@ public class Review {
 	@Column(name="rating")
 	private Integer stars;
 		
-	
-	
-	public Review(IdClass id, Restaurant restaurant, User user) {
+	public Review(Restaurant restaurant, User user, Integer stars) {
 		super();
 		this.id = new IdClass(restaurant.getRestaurantId(), user.getUserId());
 		this.restaurant = restaurant;
 		this.user = user;
+		this.stars = stars;
 	}
+	
+	public Review(Restaurant restaurant, User user) {
+		super();
+		this.id = new IdClass(restaurant.getRestaurantId(), user.getUserId());
+		this.restaurant = restaurant;
+		this.user = user;
+		this.stars = 5;
+		this.reviewBody = "Perfect";
+	}
+	
+	
 
 	public Review() {
 		super();

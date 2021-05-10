@@ -18,7 +18,8 @@ public interface RestaurantRepository extends JpaRepository<Restaurant,Integer> 
 	
 	List<Restaurant> findRestaurauntsByCity(String city);
 	
-	@Query("select restaurantName, description, city from Restaurant where restaurantId = ?1")
+	//TODO FIX QUERRIES
+	@Query("select restaurantName, description, city from Restaurant where restaurantId = :rid")
 	Restaurant findRestaurauntById(Integer rid);
 	
 	

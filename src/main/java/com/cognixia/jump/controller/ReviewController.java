@@ -2,9 +2,15 @@ package com.cognixia.jump.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cognixia.jump.model.Restaurant;
 import com.cognixia.jump.model.Review;
+import com.cognixia.jump.model.User;
+import com.cognixia.jump.repository.RestaurantRepository;
 import com.cognixia.jump.repository.ReviewRepository;
+import com.cognixia.jump.repository.UserRepository;
+
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @RestController
 public class ReviewController {
@@ -22,14 +27,20 @@ public class ReviewController {
 	@Autowired
 	ReviewRepository repo;
 	
+	@Autowired
+	RestaurantRepository restaurantRepo;
+	
+	@Autowired
+	UserRepository userRepo;
+	
 	//-----------------GET METHODS------------------------
 	
-	@GetMapping(value="/review/{userName}")
+	@GetMapping(value="/getreview/{userName}")
 	public List<Review> findReviewsByUser(@PathVariable String userName){
 		return repo.findReviewsByUserName(userName);
 	}
 	
-	@GetMapping(value="/review/{restaurantName}")
+	@GetMapping(value="/getreview/{restaurantName}")
 	public List<Review> findReviewsByRestaurant(@PathVariable String restaurantName){
 		return repo.findReviewsByRestaurantName(restaurantName);
 	}
@@ -49,6 +60,15 @@ public class ReviewController {
 		repo.save(review);
 	}
 	
+	@PostMapping(value = "/samplereview")
+	public void update() {
+		Restaurant restaurant = restaurantRepo.findRestaurauntById(1);
+		Optional<User> user = userRepo.findById(1);
+		
+		if(user.isPresent()) {
+		repo.save(new Review(restaurant,user.get()));
+		}
+	}
 	
 	
 }

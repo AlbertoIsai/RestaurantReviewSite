@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Table(name="USERS")
 @Entity
@@ -29,6 +31,7 @@ public class User implements Serializable {
 	String username;
 	
 	@Column(name="PASSWORD")
+	@JsonIgnore
 	String password;
 	
 	@Transient
@@ -38,8 +41,7 @@ public class User implements Serializable {
 		super();
 	}
 	
-	
-	
+
 	public List<Review> getReviews() {
 		return reviews;
 	}
