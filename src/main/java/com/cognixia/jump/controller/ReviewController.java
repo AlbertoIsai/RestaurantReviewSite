@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @RestController
 public class ReviewController {
@@ -45,10 +46,24 @@ public class ReviewController {
 		return repo.findReviewsByRestaurantName(restaurantName);
 	}
 	
+	@GetMapping(value="/getreview/avg/{restaurantName}")
+	public Double findStarAverage(@PathVariable String restaurantName) {
+		return repo.findAverageStars(restaurantName);
+	}
+	
+	
 	//-----------------POST METHOD------------------------
 	@PostMapping(value="/review")
-	public void addReview(@RequestBody Review review) {
-		repo.save(review);
+	public @ResponseBody String addReview(@RequestBody Review review) {
+		int userId = review.getUserId();
+		int restaurantId = review.getRestaurantId();
+		if(repo.findReviewByUserAndRestaurant(restaurantId, userId) != null) {
+			return "This user has already reviewed this restaurant";
+		} else {
+			repo.save(review);
+			return "Successfully added your review";
+		}
+		
 	}
 	
 

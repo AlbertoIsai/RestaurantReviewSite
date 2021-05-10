@@ -37,7 +37,8 @@ public class Restaurant implements Serializable{
 	@Transient
 	List<Review> reviews;
 	
-	
+	@Transient
+	Double stars;
 	
 	public List<Review> getReviews() {
 		return reviews;
