@@ -19,7 +19,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant,Integer> 
 	List<Restaurant> findRestaurauntsByCity(String city);
 	
 	//TODO FIX QUERRIES
-	@Query("select restaurantName, description, city from Restaurant where restaurantId = :rid")
+	@Query(value = "select restaurantName, description, city from restaurant where restaurantId = :rid", nativeQuery = true)
 	Restaurant findRestaurauntById(Integer rid);
 	
 	
