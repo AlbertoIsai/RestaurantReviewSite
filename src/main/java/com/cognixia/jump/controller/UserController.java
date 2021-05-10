@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cognixia.jump.model.User;
 import com.cognixia.jump.repository.UserRepository;
 
-@RequestMapping("/api")
 @RestController
 public class UserController 
 {
@@ -29,7 +28,7 @@ public class UserController
 		// return all user		
 		return userRepo.findAll();
 	}
-	@GetMapping(value="/user/{reviewId}")
+	@GetMapping(value="/user/review/{reviewId}")
 	public String findUserByReview(@PathVariable Integer reviewId) {
 		return userRepo.findUserNameByReview(reviewId);
 	}
@@ -41,7 +40,7 @@ public class UserController
 		return userRepo.findUsersByUsername(username);
 	}
 	
-	@GetMapping("/user/{id}")
+	@GetMapping("/user/id/{id}")
 	public Optional<User> findUserById(@PathVariable String id)
 	{
 		 return userRepo.findById(Integer.parseInt(id));
