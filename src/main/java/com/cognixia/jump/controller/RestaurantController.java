@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.cognixia.jump.model.Restaurant;
 import com.cognixia.jump.model.Review;
 import com.cognixia.jump.repository.RestaurantRepository;
+import com.cognixia.jump.repository.ReviewRepository;
 
 @RestController
 @CrossOrigin
@@ -27,9 +28,16 @@ public class RestaurantController {
 	@Autowired
 	private RestaurantRepository repo;
 	
+	@Autowired
+	private ReviewRepository reviewRepo;
+	
 	@GetMapping("/restaurants")
-	public List<Restaurant> getAllRestaurants() {
-		return repo.findAll();
+	public Iterable<Restaurant> getAllRestaurants() {
+		List<Restaurant> restaurants = repo.findAll();
+		for (Restaurant r : restaurants) {
+			r.setReviews(reviewRepo.findReviewsByRestaurantName(r.getRestaurantName()));
+		}
+		return restaurants;
 	}
 	
 	@GetMapping("/restaurants/{id}")

@@ -15,6 +15,7 @@ public interface UserRepository extends JpaRepository<User,Integer>{
 	
 	List<User> findUsersByAdmin(boolean admin);
 
+	//TODO FIX QUERRIES
 	@Query(value = "SELECT admin FROM user WHERE userName = ?1", nativeQuery = true)
 	boolean isAdmin(String userName);
 	
