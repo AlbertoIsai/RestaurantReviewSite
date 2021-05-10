@@ -62,12 +62,8 @@ public class ReviewController {
 	
 	@PostMapping(value = "/samplereview")
 	public void update() {
-		Restaurant restaurant = restaurantRepo.findRestaurauntById(1);
-		Optional<User> user = userRepo.findById(1);
-		
-		if(user.isPresent()) {
-		repo.save(new Review(restaurant,user.get()));
-		}
+
+		repo.save(new Review(1,1));
 	}
 	
 	

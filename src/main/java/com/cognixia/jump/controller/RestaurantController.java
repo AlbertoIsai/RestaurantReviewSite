@@ -43,7 +43,8 @@ public class RestaurantController {
 	@GetMapping("/restaurants/{id}")
 	public Restaurant getRestaurantById(@PathVariable Integer id) {
 		Restaurant restaurant = repo.findById(id).get();
-		restaurant.setReviews(reviewRepo.findReviewsByRestaurantName(restaurant.getRestaurantName()));
+		//restaurant.setReviews(reviewRepo.findReviewsByRestaurantName(restaurant.getRestaurantName()));
+		restaurant.setReviews(reviewRepo.findReviewsByRestaurantId(id));
 		return restaurant;
 	}
 	

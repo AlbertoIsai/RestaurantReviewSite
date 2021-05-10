@@ -45,7 +45,7 @@ public class UserController
 	//take in user and check to make sure password matches. if it does, return User
 	@GetMapping(value="/user/validation")
 	public boolean isValid(User user) {
-		if (user.getUsername() == userRepo.findUserByPassword(user.getPassword()).getUsername()) {
+		if (user.getUsername().equals(userRepo.findUserByPassword(user.getPassword()).getUsername())) {
 			return true;
 		}
 		return false;
