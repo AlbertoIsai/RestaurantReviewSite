@@ -1,19 +1,26 @@
 package com.cognixia.jump.controller;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cognixia.jump.model.User;
 import com.cognixia.jump.repository.UserRepository;
 
+@CrossOrigin
 @RestController
 public class UserController 
 {
@@ -22,12 +29,13 @@ public class UserController
 		
 	
 	//-------------------GET METHODS-------------------
-	@GetMapping(value="/user")
-	public List<User> getAllUsers()
-	{
-		// return all user		
-		return userRepo.findAll();
-	}
+    @GetMapping(value = "/getuser")
+    @CrossOrigin
+    public User currentUserNameSimple(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        return userRepo.findUsersByUsername(principal.getName());
+    }
+    
 	@GetMapping(value="/user/review/{reviewId}")
 	public String findUserByReview(@PathVariable Integer reviewId) {
 		return userRepo.findUserNameByReview(reviewId);

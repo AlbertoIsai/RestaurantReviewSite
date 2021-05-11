@@ -13,13 +13,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.cognixia.jump.service.JwtUserDetailsService;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 
 @Component
+@CrossOrigin
 public class JwtRequestFilter extends OncePerRequestFilter {
 
 	@Autowired
@@ -46,9 +49,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				System.out.println("Unable to get JWT Token");
 			} catch (ExpiredJwtException e) {
 				System.out.println("JWT Token has expired");
+			} catch (MalformedJwtException e) {
+				logger.warn("JWT Token is not present: " + jwtToken);
 			}
 		} else {
-			logger.warn("JWT Token does not begin with Bearer String");
+			logger.warn("JWT Token does not begin with Bearer String" + requestTokenHeader);
 		}
 
 		// Once we get the token validate it.
