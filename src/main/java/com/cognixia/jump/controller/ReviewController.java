@@ -38,12 +38,12 @@ public class ReviewController {
 	
 	//-----------------GET METHODS------------------------
 	
-	@GetMapping(value="/getreview/{userName}")
+	@GetMapping(value="/getreview/user/{userName}")
 	public List<Review> findReviewsByUser(@PathVariable String userName){
 		return repo.findReviewsByUserName(userName);
 	}
 	
-	@GetMapping(value="/getreview/{restaurantName}")
+	@GetMapping(value="/getreview/restaurant/{restaurantName}")
 	public List<Review> findReviewsByRestaurant(@PathVariable String restaurantName){
 		return repo.findReviewsByRestaurantName(restaurantName);
 	}
@@ -59,8 +59,11 @@ public class ReviewController {
 	public @ResponseBody String addReview(@RequestBody Review review) {
 		int userId = review.getUserId();
 		int restaurantId = review.getRestaurantId();
-		if(repo.findReviewByUserAndRestaurant(restaurantId, userId) != null) {
-			return "This user has already reviewed this restaurant";
+		Review foundReview = repo.findReviewByUserAndRestaurant(restaurantId, userId);
+		if(foundReview != null) {
+			review.setReviewId(foundReview.getReviewId());
+			update(review);
+			return "This user has already reviewed this restaurant, updated review";
 		} else {
 			repo.save(review);
 			return "Successfully added your review";
