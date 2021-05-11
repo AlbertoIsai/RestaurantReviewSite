@@ -80,7 +80,7 @@ public class UserController
 	}
 	
 //----------------------POST METHODS----------------	
-	
+	@CrossOrigin
 	@PostMapping(value="/user")
 	public void addReview(@RequestBody User user) {
 		userRepo.save(user);

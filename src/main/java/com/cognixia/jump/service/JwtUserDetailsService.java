@@ -40,4 +40,5 @@ public class JwtUserDetailsService implements UserDetailsService {
 		newUser.setAdmin(false);
 		return userRepository.save(newUser);
 	}
+	
 }
